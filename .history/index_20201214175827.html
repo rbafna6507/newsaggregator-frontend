@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Informate</title>
+</head>
+<body>
+    <h1>Informate</h1>
+    <h3>Reliable, factual, and accurate news, all in one place.</h3>
+    <ul id = "lists"></ul>
+</body>
+<script>
+function createNode(element) {
+    return document.createElement(element);
+}
+
+function append(parent, el) {
+  return parent.appendChild(el);
+}
+
+const ul = document.getElementById("lists")
+// Send the same request
+fetch('http://127.0.0.1:5000/hello')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json);
+        for(var i = 0; i <= 6; i++){
+            let document = JSON.stringify(json[i])
+            document = JSON.parse(document)
+            headline = document[0]
+            link = document[2]
+            // document.getElementById("bruhh").innerHTML = headline
+            let li = createNode('li'), a = createNode('a')
+            a.href = link
+            a.innerHTML = headline
+            append(li, a)
+            append(ul, li)
+            delete document
+
+        }
+    })
+</script>
+</html>

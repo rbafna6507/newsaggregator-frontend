@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<head>
+    <title>Informate</title>
+</head>
+<body>
+    <div style="margin-left: 24px">
+        <div>
+            <h1>Informate</h1>
+        <h3>Reliable, factual, and accurate news, all in one place.</h3>
+        <br>
+        <h2>Nytimes</h2>
+        <ul id = "nytimes"></ul>
+        </div>
+        <div>
+            <h2>Reuters</h2>
+            <ul id = "reuters"></ul>
+        </div>
+        <div>
+            <h2>Wired</h2>
+            <ul id = "wired"></ul>
+        </div>
+        <div>
+            <h2>Economist</h2>
+            <ul id = "economist"></ul>
+        </div>
+        <div>
+            <h2>BBC</h2>
+            <ul id = "bbc"></ul>
+        </div>
+    </div>
+</body>
+<script>
+function createNode(element) {
+    return document.createElement(element);
+}
+
+function append(parent, el) {
+  return parent.appendChild(el);
+}
+
+// Send the same request
+fetch('https://newsaggregator-api.herokuapp.com/')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json);
+        lets_do_it("nytimes", json);
+        lets_do_it("reuters", json);
+        lets_do_it("wired", json);
+        lets_do_it("economist", json);
+        lets_do_it("bbc", json);
+    })
+function lets_do_it(ul_id, resp){
+    const ul = document.getElementById(ul_id)
+    for(var i = 0; i <= 5; i++){
+        let document = JSON.stringify(resp[0]);
+        document = JSON.parse(document);
+        headline = document[0];
+        summary = document[1];
+        link = document[2];
+        // document.getElementById("bruhh").innerHTML = headline
+        let li = createNode('li'), a = createNode('a');
+        a.href = link;
+        a.innerHTML = headline;
+        a.target = "_blank";
+        append(li, a);
+        append(ul, li);
+        resp.shift();
+    }
+}
+</script>
+</html>

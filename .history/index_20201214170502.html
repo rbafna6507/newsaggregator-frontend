@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Informate</title>
+</head>
+<body>
+    <h1>Informate</h1>
+    <h3>Reliable, factual, and accurate news, all in one place.</h5>
+    <p id = "bruhh"></p>
+</body>
+<script>
+// Send the same request
+fetch('http://127.0.0.1:5000/hello')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json);
+        var first = JSON.stringify(json[1])
+        first = JSON.parse(first)
+        document.getElementById("bruhh").innerHTML = first[1]
+    })
+</script>
+</html>
